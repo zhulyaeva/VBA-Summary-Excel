@@ -1,0 +1,103 @@
+Sub training()
+Dim lngRowCounter As Long
+Dim intColCounter As Integer
+
+Dim wkb As Workbook
+Dim shtData As Worksheet
+Dim shtSummary As Worksheet
+
+Application.Calculation = xlCalculationManual
+
+
+Set wkb = ThisWorkbook
+Set shtData = wkb.Sheets("Data")
+Set shtSummary = wkb.Sheets("Summary")
+
+'For lngRowCounter = 1 To 100
+'
+'    shtData.Cells(lngRowCounter, 1) = lngRowCounter
+'
+'Next lngRowCounter
+
+lngRowCounter = 2
+
+With shtData
+       
+'.Columns("A:A").Insert
+
+       
+    Do Until .Cells(lngRowCounter, 2) = ""
+           
+            .Cells(lngRowCounter, 1) = .Cells(lngRowCounter, 2) & .Cells(lngRowCounter, 3) & .Cells(lngRowCounter, 4)
+    
+        lngRowCounter = lngRowCounter + 1
+    Loop
+
+
+
+End With
+
+Application.Calculation = xlCalculationAutomatic
+
+
+End Sub
+
+
+Sub HeatMap()
+
+Dim lngRowCounter As Long
+Dim intColCounter As Integer
+
+Dim wkb As Workbook
+Dim shtData As Worksheet
+Dim shtSummary As Worksheet
+
+Application.Calculation = xlCalculationManual
+
+
+Set wkb = ThisWorkbook
+Set shtData = wkb.Sheets("Data")
+Set shtSummary = wkb.Sheets("Summary")
+
+
+With shtSummary
+
+lngRowCounter = 8
+
+    Do Until .Cells(lngRowCounter, 2) = ""
+        
+        intColCounter = 2
+                
+            Do Until .Cells(7, intColCounter) = ""
+            
+                If .Cells(lngRowCounter, intColCounter) > 7000 Then
+                
+                    .Cells(lngRowCounter, intColCounter).Interior.ColorIndex = 10
+                
+                ElseIf .Cells(lngRowCounter, intColCounter) <= 7000 And .Cells(lngRowCounter, intColCounter) > 4000 Then
+                
+                    .Cells(lngRowCounter, intColCounter).Interior.ColorIndex = 44
+                    
+                Else
+                    
+                    .Cells(lngRowCounter, intColCounter).Interior.ColorIndex = 46
+                
+                End If
+                
+                Debug.Print .Cells(lngRowCounter, intColCounter)
+                
+                intColCounter = intColCounter + 1
+            Loop
+            
+            
+        
+        lngRowCounter = lngRowCounter + 1
+    Loop
+
+
+End With
+
+
+Application.Calculation = xlCalculationAutomatic
+
+End Sub
